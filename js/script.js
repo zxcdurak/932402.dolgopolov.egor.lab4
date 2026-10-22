@@ -28,6 +28,17 @@ function filterOver(numbers, limit) {
     return result;
 }
 
+function countLight(numbers, limit) {
+    let count = 0;
+    for (let i = 0; i < numbers.length; i++) {
+        if (numbers[i] <= limit) {
+            count++;
+        }
+    }
+    const share = numbers.length > 0 ? count / numbers.length : 0;
+    return { count, share };
+}
+
 let userName = prompt("Введите своё имя");
 if (userName === null || userName.trim() === "") {
     userName = "гость";
@@ -38,22 +49,15 @@ const heavy = filterOver(calories, 600);
 const total = sum(calories);
 const heavyTotal = sum(heavy);
 const biggest = max(calories);
-
-let lightCount = 0;
-for (let i = 0; i < calories.length; i++) {
-    if (calories[i] <= 300) {
-        lightCount++;
-    }
-}
-const lightShare = lightCount / calories.length;
+const light = countLight(calories, 300);
 
 alert(`Суммарная калорийность – ${total} ккал, из них ${heavyTotal} ккал – в высококалорийных блюдах`);
 
 console.log("Калорийность блюд:", calories);
 console.log(`Самое калорийное блюдо: ${biggest} ккал`);
 console.log("Высококалорийные блюда (> 600 ккал):", heavy);
-console.log(`Количество низкокалорийных блюд (≤ 300 ккал): ${lightCount}`);
-console.log(`Доля низкокалорийных блюд: ${(lightShare * 100).toFixed(1)}% (${lightCount} из ${calories.length})`);
+console.log(`Количество низкокалорийных блюд (≤ 300 ккал): ${light.count}`);
+console.log(`Доля низкокалорийных блюд: ${(light.share * 100).toFixed(1)}% (${light.count} из ${calories.length})`);
 
 if (total > 3000) {
     console.log("Такой рацион лучше распределить на 2 дня");
